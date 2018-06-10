@@ -3,12 +3,14 @@ datos=read.csv("Hogares3.csv", dec = ",")
 
 #Crear indicador de comodidades basicas, relacionar con nivel educativo alcanzado.
 
+library(tidyverse)
+
 
 INSE=datos%>%
   select(a1,a2,a6, a91:a910, a912, a914, a916:a917, a919)
 
 
-ASAP=INSE%>%
+ICH=INSE%>%
   mutate(a1=case_when(
     a1=="1" ~ 0,
     a1=="2"~10),
@@ -77,9 +79,108 @@ ASAP=INSE%>%
       a919=="2"~0)
     )
 
-ASAP%>%
-  na.omit()
-  mutate(Puntaje=sum(a1+a2+a6+a91+a92+a93+a94+a95+a96+a97+a98+a99+a910+a912+a914+a916+a917+a919))
+ICH[is.na(ICH)] <- 0
 
+
+ICH=ICH%>%
+  mutate(Puntaje=rowSums(ICH))
+
+#Indicador Comfort del Hogar
+
+ICH%>%
+  ggplot(aes(x=Puntaje))+
+  geom_histogram(fill="white", colour="black")
   
+
+datos=cbind(datos, ICH[,19])
+
+#Relacion ICH , repitio algun año
+
+library(arules)
+library(scales)
+  
+datos$`ICH[, 19]`=discretize(datos$`ICH[, 19]`, method = "interval", breaks = 10)
+str(datos$`ICH[, 19]`)
+
+datos=datos%>%
+  mutate(b2=case_when(
+    b2=="1" ~ 1,
+    b2=="2"~2))
+    
+datos$b2=as.factor(datos$b2)
+
+#GRAFICO DE BARRAS
+
+datos%>%
+  filter(!is.na(b2))%>%
+  ggplot()+
+  geom_bar(aes((`ICH[, 19]`), fill=b2), position= "fill")+
+  labs(x="ICH en intervalos", y="Proporción", fill="Repitió año")
+  
+#GRAFICO DE BARRAS 2
+
+datos=datos%>%
+  mutate(b4=case_when(
+    b4=="1" ~ 1,
+    b4=="2"~2))
+
+datos$b4=as.factor(datos$b4)
+
+datos%>%
+  filter(!is.na(b4))%>%
+  ggplot()+
+  geom_bar(aes((`ICH[, 19]`), fill=b4), position= "fill")+
+  labs(x="ICH en intervalos", y="Proporción", fill="Asiste IE")
+
+#GRAFICO DE BARRAS 3
+
+datos=datos%>%
+  mutate(b6=case_when(
+    b6=="1" ~ 1,
+    b6=="2"~2))
+
+datos$b6=as.factor(datos$b6)
+
+datos%>%
+  filter(!is.na(b6))%>%
+  ggplot()+
+  geom_bar(aes((`ICH[, 19]`), fill=b6), position= "fill")+
+  labs(x="ICH en intervalos", y="Proporción", fill="Publico/Privado")
+
+
+#GRAFICO DE BARRAS 4
+
+datos=datos%>%
+  mutate(b12=case_when(
+    b12=="1" ~ 1,
+    b12=="2"~2))
+
+datos$b12=as.factor(datos$b12)
+
+datos%>%
+  filter(!is.na(b12))%>%
+  ggplot()+
+  geom_bar(aes((`ICH[, 19]`), fill=b12), position= "fill")+
+  labs(x="ICH en intervalos", y="Proporción", fill="Visito medico")
+
+#GRAFICO DE BARRAS 5
+
+datos=datos%>%
+  mutate(b6=case_when(
+    b6=="1" ~ 1,
+    b6=="2"~2))
+
+datos$b6=as.factor(datos$b6)
+
+datos%>%
+  filter(!is.na(b6))%>%
+  ggplot()+
+  geom_bar(aes((`ICH[, 19]`), fill=b6), position= "fill")+
+  labs(x="ICH en intervalos", y="Proporción", fill="Publico/Privado")
+
+
+
+
+
+
 
