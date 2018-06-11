@@ -116,6 +116,7 @@ datos%>%
   ggplot()+
   geom_bar(aes((`ICH[, 19]`), fill=b2), position= "fill")+
   labs(x="ICH en intervalos", y="Proporción", fill="Repitió año")
+
   
 #GRAFICO DE BARRAS 2
 
@@ -177,6 +178,61 @@ datos%>%
   ggplot()+
   geom_bar(aes((`ICH[, 19]`), fill=b6), position= "fill")+
   labs(x="ICH en intervalos", y="Proporción", fill="Publico/Privado")
+
+#Grafico de barras 6
+
+datos=datos%>%
+  mutate(b33a=case_when(
+    b33a=="1" ~ 1,
+    b33a=="2"~2))
+
+datos$b33a=as.factor(datos$b33a)
+
+datos%>%
+  filter(!is.na(b33a))%>%
+  ggplot()+
+  geom_bar(aes((`ICH[, 19]`), fill=b33a), position= "fill")+
+  labs(x="ICH en intervalos", y="Proporción", fill="Vive c/2 padres")
+
+
+
+#GEOM COUNT
+
+datos=datos%>%
+  mutate(b10=case_when(
+    b10=="1" ~ 1,
+    b10=="2"~2,
+    b10=="3"~3,
+    b10=="4"~4,
+    b10=="5"~5))
+
+datos$b33a=as.factor(datos$b33a)
+
+datos%>%
+  filter(!is.na(b10))%>%
+  ggplot()+
+  geom_count(aes(`ICH[, 19]`, b10))+
+  labs(x="ICH en intervalos", y="Nivel esperado", size="Cantidad de obs")
+
+
+#Geom Tile
+
+datos=datos%>%
+  mutate(b15=case_when(
+    b10=="1" ~ 1,
+    b10=="2"~2,
+    b10=="3"~3,
+    b10=="4"~4,
+    b10=="5"~5))
+
+datos$b15=as.factor(datos$b15)
+
+datos%>%
+  filter(!is.na(b15), !is.na(`ICH[, 19]`))%>%
+  group_by(`ICH[, 19]`, b15) %>%
+  summarise(cont= n())%>%
+  ggplot(mapping = aes(x = `ICH[, 19]`, y = b15)) +
+  geom_tile(mapping = aes(fill = cont))
 
 
 
