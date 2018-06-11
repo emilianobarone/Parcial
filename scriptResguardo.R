@@ -235,6 +235,27 @@ datos%>%
   geom_tile(mapping = aes(fill = cont))
 
 
+#BARRAS
+
+
+datos=datos%>%
+  mutate(b31a=case_when(
+    b31a=="1" ~ 1,
+    b31a=="2"~2,
+    b31a=="3" ~ 3,
+    b31a=="4" ~ 4,
+    b31a=="5" ~ 5,
+    b31a=="6" ~ 6,
+    b31a=="7" ~ 7))
+
+datos$b31a=as.factor(datos$b33a)
+
+datos%>%
+  filter(!is.na(b31a))%>%
+  ggplot()+
+  geom_bar(aes((`ICH[, 19]`), fill=b31a), position= "fill")+
+  labs(x="ICH en intervalos", y="Proporción", fill="Expectativas")
+
 
 
 
