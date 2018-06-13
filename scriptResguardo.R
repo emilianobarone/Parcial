@@ -167,21 +167,6 @@ datos%>%
 #GRAFICO DE BARRAS 5
 
 datos=datos%>%
-  mutate(b6=case_when(
-    b6=="1" ~ 1,
-    b6=="2"~2))
-
-datos$b6=as.factor(datos$b6)
-
-datos%>%
-  filter(!is.na(b6))%>%
-  ggplot()+
-  geom_bar(aes((`ICH[, 19]`), fill=b6), position= "fill")+
-  labs(x="ICH en intervalos", y="Proporción", fill="Publico/Privado")
-
-#Grafico de barras 6
-
-datos=datos%>%
   mutate(b33a=case_when(
     b33a=="1" ~ 1,
     b33a=="2"~2))
@@ -248,7 +233,7 @@ datos=datos%>%
     b31a=="6" ~ 6,
     b31a=="7" ~ 7))
 
-datos$b31a=as.factor(datos$b33a)
+datos$b31a=as.factor(datos$b31a)
 
 datos%>%
   filter(!is.na(b31a))%>%
