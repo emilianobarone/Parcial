@@ -1,0 +1,100 @@
+---
+title: "Proyecto Final"
+output: pdf_document
+---
+
+
+\centering
+
+##Estudiantes: Emiliano Barone, María Noel Blanco
+
+\raggedright
+
+#INTRODUCCIÓN
+
+Nuestro trabajo se basa en el análisis de los datos del Estudio Longitudinal de Bienestar del Uruguay llevado a cabo por el Instituto de Economía de la FCEA.Su objetivo general es "el abordaje sistemático del estudio de la evolución del bienestar desde un enfoque multidimensional, a partir de un relevamiento longitudinal representativo de los niños que concurren al sistema de educación primaria público." 
+
+El trabajo tuvo inicio en el año 2004 y continua hasta el día de hoy. La segunda etapa fue en 2006, la tercera en 2011/12, la cuarta 2015/16 y este año comenzó la quinta. Nuestro trabajo se va a focalizar en la tercera ola cuando los que eran niños en 2004 pasaron a tener alrededor de 14 años.
+
+Un aspecto positivo de los estudios longitudinales es que disponemos de información a lo largo del tiempo de la misma muestra de niños con la que se comenzó. Esto permite distinguir fenómenos de corto, medio y largo plazo, y su distribución. Además "se espera que una mayor comprensión de estos aspectos permita proporcionar insumos para el mejor diseño de políticas sociales que abarquen desde la temprana infancia hasta la adolescencia."
+
+Para una primera exploración de los datos utilizaremos el software estadístico R.
+
+
+#DATOS
+
+Los datos contienen información acerca de los niños, los adultos responsables y las características de sus hogares; abarcando un conjunto amplio de aspectos, como salud, nutrición, desarrollo socioemocional, ingresos, educación, trabajo, participación social y autonomía.
+
+Los datos de este estudio están divididos en dos categorías: "personas" y "hogares". En nuestra exploración, sólo consideraremos la información proveniente de esta última categoría. Nuestra base de datos contiene 2151 observaciones y 397 variables, de las cuales utilizaremos únicamente algunas de las cualitativas.
+
+
+
+
+
+\newpage
+
+#ANÁLISIS EXPLORATORIO
+
+Para llevar a cabo el análisis de los datos decidimos crear un indicador que toma en cuenta las principales características de los hogares y sus comodidades, con el fin de encontrar un sustituto de lo que sería la variable ingreso que perciben estos hogares. 
+
+Para ello nos basamos en el INSE (Índice de Nivel Socioeconómico), que toma en cuenta variables relacionadas con la composición del hogar, la educación y atención en salud, elementos del confort del hogar y características de la vivienda. Con esta información se elabora un sistema de puntaje en el que asigna a cada variable un puntaje mínimo y máximo. Dependiendo de la respuesta proporcionada por el entrevistado, se obtiene una determinada cantidad de puntos por cada variable. La suma de ellos es el puntaje final.
+
+Con la información proporcionada por este estudio longitudinal, no es posible contruir el INSE debido a la falta de muchas de sus variables. Por lo tanto, construimos un indicador utilizando el mismo sistema de puntaje que el INSE pero basado únicamente en las características y elementos de confort del hogar (ya que son los presentes en el estudio) al cual denominamos ICH (Indicador de Confort del Hogar).
+
+
+```{r}
+
+
+```
+
+##Parte 3
+
+```{r}
+
+```
+
+\newpage
+
+##Parte 4
+
+```{r, echo=FALSE}
+
+
+```
+
+```{r}
+
+```
+
+
+\newpage
+
+
+##Parte 5
+
+```{r}
+
+```
+
+
+\newpage
+
+##Parte 6
+
+```{r, echo= FALSE, message=FALSE}
+
+```
+
+
+```{r}
+
+```
+
+ 
+
+\newpage
+
+
+
+
+
