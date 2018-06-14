@@ -90,8 +90,8 @@ datos$`ICH[, 19]`=discretize(datos$`ICH[, 19]`, method = "interval", breaks = 10
 
 datos=datos%>%
   mutate(b2=case_when(
-    b2=="1" ~ 1,
-    b2=="2"~2))
+    b2=="1" ~ "SI",
+    b2=="2"~"NO"))
 
 datos$b2=as.factor(datos$b2)
 
@@ -99,7 +99,9 @@ datos%>%
   filter(!is.na(b2))%>%
   ggplot()+
   geom_bar(aes((`ICH[, 19]`), fill=b2), position= "fill")+
-  labs(x="ICH en intervalos", y="Proporción", fill="Repitió año")
+  labs(x="ICH en intervalos", y="Proporción", fill="Repitió año")+
+  ggtitle("Barplot desempeño educativo.")
+
 
 # BARPLOT B
 
@@ -192,8 +194,8 @@ str(datos$`ICH[, 19]`)
 
 datos=datos%>%
   mutate(b4=case_when(
-    b4=="1" ~ 1,
-    b4=="2"~2))
+    b4=="1" ~ "SI",
+    b4=="2"~"NO"))
 
 datos$b4=as.factor(datos$b4)
 
@@ -201,7 +203,8 @@ datos%>%
   filter(!is.na(b4))%>%
   ggplot()+
   geom_bar(aes((`ICH[, 19]`), fill=b4), position= "fill")+
-  labs(x="ICH en intervalos", y="Proporción", fill="Asiste IE")
+  labs(x="ICH en intervalos", y="Proporción", fill="Asiste IE")+
+  ggtitle("Barplot asistencia a centro educativo")
 
 #BARPLOT C
 
@@ -293,8 +296,8 @@ str(datos$`ICH[, 19]`)
 
 datos=datos%>%
   mutate(b6=case_when(
-    b6=="1" ~ 1,
-    b6=="2"~2))
+    b6=="1" ~ "PUBLICO",
+    b6=="2"~ "PRIVADO"))
 
 datos$b6=as.factor(datos$b6)
 
@@ -302,8 +305,8 @@ datos%>%
   filter(!is.na(b6))%>%
   ggplot()+
   geom_bar(aes((`ICH[, 19]`), fill=b6), position= "fill")+
-  labs(x="ICH en intervalos", y="Proporción", fill="Publico/Privado")
-
+  labs(x="ICH en intervalos", y="Proporción", fill="Publico/Privado")+
+  ggtitle("Barplot tipo de instituto educativo")
 
 #BARPLOT D 
 
@@ -395,8 +398,8 @@ str(datos$`ICH[, 19]`)
 
 datos=datos%>%
   mutate(b33a=case_when(
-    b33a=="1" ~ 1,
-    b33a=="2"~2))
+    b33a=="1" ~ "No es cierto",
+    b33a=="2"~"Un tanto cierto"))
 
 datos$b33a=as.factor(datos$b33a)
 
@@ -404,7 +407,8 @@ datos%>%
   filter(!is.na(b33a))%>%
   ggplot()+
   geom_bar(aes((`ICH[, 19]`), fill=b33a), position= "fill")+
-  labs(x="ICH en intervalos", y="Proporción", fill="Vive c/2 padres")
+  labs(x="ICH en intervalos", y="Proporción", fill="Vive c/2 padres")+
+  ggtitle("Barplot convivencia con los padres")
 
 #BARPLOT E
 
@@ -496,13 +500,11 @@ str(datos$`ICH[, 19]`)
 
 datos=datos%>%
   mutate(b31a=case_when(
-    b31a=="1" ~ 1,
-    b31a=="2"~2,
-    b31a=="3" ~ 3,
-    b31a=="4" ~ 4,
-    b31a=="5" ~ 5,
-    b31a=="6" ~ 6,
-    b31a=="7" ~ 7))
+    b31a=="1" ~ "Reconocida y exitosa",
+    b31a=="2"~"Recursos suficientes",
+    b31a=="3" ~ "Estudie a gusto",
+    b31a=="4" ~ "Supere $ padres",
+    b31a=="5" ~ "Supere $ amigos"))
 
 datos$b31a=as.factor(datos$b31a)
 
@@ -510,4 +512,5 @@ datos%>%
   filter(!is.na(b31a))%>%
   ggplot()+
   geom_bar(aes((`ICH[, 19]`), fill=b31a), position= "fill")+
-  labs(x="ICH en intervalos", y="Proporción", fill="Expectativas")
+  labs(x="ICH en intervalos", y="Proporción", fill="Expectativas")+
+  ggtitle("Barplot expectativas de los hijos")
