@@ -20,6 +20,16 @@ Un aspecto positivo de los estudios longitudinales es que disponemos de informac
 
 Para una primera exploración de los datos utilizaremos el software estadístico R.
 
+#OBJETIVOS
+
+El objetivo de este trabajo es generar un primer análisis de los datos del estudio longitudinal; un pantallazo general que permita conocer algunas de sus variables e incentivar futuras exploraciones.
+Como objetivos específicos tenemos:
+
+1. Crear una herramienta que represente una idea de la posición económica de los hogares (ICH).
+2. Analizar distintos aspectos de la educación del, ahora, adolescente con respecto al ICH.
+3.
+4.
+5. Creación de una herramienta que permite una visualización interactiva (Shiny App).
 
 #DATOS
 
@@ -302,6 +312,7 @@ datos%>%
 \newpage
 
 
-
+Preguntas generales para responder
+Variable ingreso.
 
 
