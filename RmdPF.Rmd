@@ -51,7 +51,10 @@ Para ello nos basamos en el INSE (Índice de Nivel Socioeconómico), que toma en
 
 Con la información proporcionada por este estudio longitudinal, no es posible contruir el INSE debido a la falta de muchas de sus variables. Por lo tanto, construimos un indicador utilizando el mismo sistema de puntaje que el INSE pero basado únicamente en las características y elementos de confort del hogar (ya que son los presentes en el estudio) al cual denominamos ICH (Indicador de Confort del Hogar).
 
+
 \newpage
+
+##EDUCACION
 
 
 
@@ -164,6 +167,7 @@ datos%>%
 ```
 
 
+\newpage
 
 
 
@@ -213,6 +217,44 @@ datos%>%
 
 
 
+```{r, echo= FALSE, message=FALSE, warning=FALSE}
+datos=datos%>%
+  mutate(b10=case_when(
+    b10=="1" ~ 1,
+    b10=="2"~2,
+    b10=="3"~3,
+    b10=="4"~4,
+    b10=="5"~5))
+
+datos$b10=as.factor(datos$b10)
+
+datos%>%
+  filter(!is.na(b10))%>%
+  ggplot()+
+  geom_bar(aes((`ICH[, 19]`), fill=b10), position= "fill")+
+  labs(x="ICH en intervalos", y="Nivel esperado", fill="Cantidad de obs")
+
+
+```
+
+\newpage
+
+
+##PADRES
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
+datos$c4=as.numeric(as.character(datos$c4))
+
+datos%>%
+  filter(!is.na(c4), !is.na(c5), !is.na(c7), c7!="99")%>%
+  ggplot(aes(y=c4, x=reorder(`ICH[, 19]`, c4, FUN = median)))+
+  geom_boxplot()
+
+
+```
+\newpage
+
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 
 
@@ -227,16 +269,11 @@ datos%>%
   filter(!is.na(b33a))%>%
   ggplot()+
   geom_bar(aes((`ICH[, 19]`), fill=b33a), position= "fill")+
-  labs(x="ICH en intervalos", y="Proporción", fill="Vive c/2 padres")+
-  ggtitle("Barplot convivencia con los padres")
-
-
+  labs(x="ICH en intervalos", y="Proporción", fill="Vive c/2 padres")
 ```
 
 
 \newpage
-
-
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -259,35 +296,12 @@ datos%>%
   ggtitle("Barplot expectativas de los hijos")
 ```
 
-
 \newpage
 
 
+##SALUD
 
-```{r, echo= FALSE, message=FALSE, warning=FALSE}
-datos=datos%>%
-  mutate(b10=case_when(
-    b10=="1" ~ 1,
-    b10=="2"~2,
-    b10=="3"~3,
-    b10=="4"~4,
-    b10=="5"~5))
-
-datos$b33a=as.factor(datos$b33a)
-
-datos%>%
-  filter(!is.na(b10))%>%
-  ggplot()+
-  geom_count(aes(`ICH[, 19]`, b10))+
-  labs(x="ICH en intervalos", y="Nivel esperado", size="Cantidad de obs")
-
-
-
-```
-
-
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
 datos=datos%>%
   mutate(b15=case_when(
     b10=="1" ~ 1,
@@ -299,20 +313,87 @@ datos=datos%>%
 datos$b15=as.factor(datos$b15)
 
 datos%>%
-  filter(!is.na(b15), !is.na(`ICH[, 19]`))%>%
-  group_by(`ICH[, 19]`, b15) %>%
-  summarise(cont= n())%>%
-  ggplot(mapping = aes(x = `ICH[, 19]`, y = b15)) +
-  geom_tile(mapping = aes(fill = cont))
+  filter(!is.na(b15))%>%
+  ggplot()+
+  geom_count(aes(`ICH[, 19]`, b15))+
+  labs(x="ICH en intervalos", y="Percepción estado de salud", size="Cantidad de obs")
+
 
 ```
-
- 
 
 \newpage
 
 
-Preguntas generales para responder
-Variable ingreso.
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+datos=datos%>%
+  mutate(b1=case_when(
+    b1=="1" ~"No" ,
+    b1=="2"~"Si, moderada",
+    b1=="3"~"Si, severa"
+  ))
 
+datps=datos%>%
+  mutate(b17=case_when(
+    b17=="1" ~"Si" ,
+    b17=="2"~"No"))
+
+
+datos$b1=as.factor(datos$b1)
+datos$b17=as.factor(datos$b17)
+
+
+datos%>%
+  filter(!is.na(b1), !is.na(b17), b17!="ns_nc", b17!="", b1!="ns_nc", b1!="")%>%
+  ggplot()+
+  geom_bar(aes(b1, fill=b17), position = "fill")+
+  labs(x="Dificultades en el aprendizaje", y="Proporción", fill="Asistencia psicológica/psiquiátrica")
+
+
+
+```
+
+\newpage
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+datos=datos%>%
+  mutate(b20=case_when(
+    b20=="1" ~ "Enfermedad",
+    b20=="2"~"Quemaduras",
+    b20=="3"~"Agresión física",
+    b20=="4"~"Otros accidentes",
+    b20=="5"~"Operación",
+    b20=="6"~"Análisis/estudios médicos",
+    b20=="7"~"Otros motivos"))
+
+datos$b20=as.factor(datos$b20)
+
+
+
+datos%>%
+  filter(b18=="1", !is.na(b20))%>%
+  group_by(b20)%>%
+  summarise(conteo=n())%>%
+  ggplot(aes(fct_reorder(b20, conteo, .desc = F), y=conteo))+
+  geom_point()+
+  coord_flip()
+
+```
+
+\newpage
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
+
+datos$b21=as.factor(datos$b21)
+
+datos%>%
+  filter(!is.na(b21), !is.na(b17), b17!="ns_nc", b17!="", b21!="ns_nc", b21!="")%>%
+  ggplot()+
+  geom_bar(aes(b21, fill=b17), position = "fill")+
+  labs(x="Cantidad de amigos", y="Proporción", fill="Asistencia psicológica/psiquiátrica")
+
+
+```
 

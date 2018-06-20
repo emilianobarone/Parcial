@@ -1,6 +1,7 @@
 datos=read.csv("Hogares3.csv", dec = ",")
 
 
+
 #Crear indicador de comodidades basicas, relacionar con nivel educativo alcanzado.
 
 library(tidyverse)
@@ -109,9 +110,9 @@ datos=datos%>%
 
 datos$b2=as.factor(datos$b2)
 
-#EDUCACION
+#EDUCACION 
 
-#GRAFICO DE BARRAS
+#Repitio año (1)
 
 datos%>%
   filter(!is.na(b2))%>%
@@ -120,7 +121,7 @@ datos%>%
   labs(x="ICH en intervalos", y="Proporción", fill="Repitió año")
 
 
-#GRAFICO DE BARRAS 2
+#Asistencia a i.educativo (2)
 
 datos=datos%>%
   mutate(b4=case_when(
@@ -135,7 +136,7 @@ datos%>%
   geom_bar(aes((`ICH[, 19]`), fill=b4), position= "fill")+
   labs(x="ICH en intervalos", y="Proporción", fill="Asiste IE")
 
-#GRAFICO DE BARRAS 3
+#Tipo de i.educativo (3)
 
 datos=datos%>%
   mutate(b6=case_when(
@@ -151,40 +152,7 @@ datos%>%
   labs(x="ICH en intervalos", y="Proporción", fill="Publico/Privado")
 
 
-#GRAFICO DE BARRAS 4
-
-datos=datos%>%
-  mutate(b12=case_when(
-    b12=="1" ~ 1,
-    b12=="2"~2))
-
-datos$b12=as.factor(datos$b12)
-
-datos%>%
-  filter(!is.na(b12))%>%
-  ggplot()+
-  geom_bar(aes((`ICH[, 19]`), fill=b12), position= "fill")+
-  labs(x="ICH en intervalos", y="Proporción", fill="Visito medico")
-
-#GRAFICO DE BARRAS 5
-
-datos=datos%>%
-  mutate(b31a=case_when(
-    b31a=="1" ~ "Reconocida y exitosa",
-    b31a=="2"~"Recursos suficientes",
-    b31a=="3" ~ "Estudie a gusto",
-    b31a=="4" ~ "Supere $ padres",
-    b31a=="5" ~ "Supere $ amigos"))
-
-datos$b31a=as.factor(datos$b31a)
-
-datos%>%
-  filter(!is.na(b31a))%>%
-  ggplot()+
-  geom_bar(aes((`ICH[, 19]`), fill=b31a), position= "fill")+
-  labs(x="ICH en intervalos", y="Proporción", fill="Expectativas")
-
-#Grafico de barras 6
+#Nivel esperado (4)
 
 datos=datos%>%
   mutate(b10=case_when(
@@ -203,9 +171,59 @@ datos%>%
   labs(x="ICH en intervalos", y="Nivel esperado", fill="Cantidad de obs")
 
 
+#PADRES
+
+#Boxplot edad de concepción/ICH (1)
+
+datos$c4=as.numeric(as.character(datos$c4))
+
+datos%>%
+  filter(!is.na(c4), !is.na(c5), !is.na(c7), c7!="99")%>%
+  ggplot(aes(y=c4, x=reorder(`ICH[, 19]`, c4, FUN = median)))+
+  geom_boxplot()
+
+
+#Convivencia con los padres (2)
+  
+datos=datos%>%
+  mutate(b33a=case_when(
+    b33a=="1" ~ "No es cierto",
+    b33a=="2"~"Un tanto cierto"))
+
+datos$b33a=as.factor(datos$b33a)
+
+datos%>%
+  filter(!is.na(b33a))%>%
+  ggplot()+
+  geom_bar(aes((`ICH[, 19]`), fill=b33a), position= "fill")+
+  labs(x="ICH en intervalos", y="Proporción", fill="Vive c/2 padres")
+
+
+
+
+# Expectativas sobre el hijo (3)
+
+datos=datos%>%
+  mutate(b31a=case_when(
+    b31a=="1" ~ "Reconocida y exitosa",
+    b31a=="2"~"Recursos suficientes",
+    b31a=="3" ~ "Estudie a gusto",
+    b31a=="4" ~ "Supere $ padres",
+    b31a=="5" ~ "Supere $ amigos"))
+
+datos$b31a=as.factor(datos$b31a)
+
+datos%>%
+  filter(!is.na(b31a))%>%
+  ggplot()+
+  geom_bar(aes((`ICH[, 19]`), fill=b31a), position= "fill")+
+  labs(x="ICH en intervalos", y="Proporción", fill="Expectativas")
+
+
+  
 #SALUD
 
-#Geom count
+# Percepcion e. salud (1)
 
 datos=datos%>%
   mutate(b15=case_when(
@@ -225,7 +243,7 @@ datos%>%
 
 
 
-#Geom_bar dificultades / asistencia psiquiatrica
+#Dificultades / asistencia psiquiatrica (2)
 
 datos%>%
   mutate(b1=case_when(
@@ -245,13 +263,13 @@ datos$b17=as.factor(datos$b17)
 
 
 datos%>%
-  filter(!is.na(b1), !is.na(b17))%>%
+  filter(!is.na(b1), !is.na(b17), b17!="ns_nc", b17!="", b1!="ns_nc", b1!="")%>%
   ggplot()+
   geom_bar(aes(b1, fill=b17), position = "fill")+
   labs(x="Dificultades en el aprendizaje", y="Proporción", fill="Asistencia psicológica/psiquiátrica")
 
 
-# Scatterplot hospitalizacion
+# Motivos hospitalizacion (3)
 
 datos%>%
   mutate(b20=case_when(
@@ -275,47 +293,15 @@ datos%>%
   geom_point()+
   coord_flip()
 
-#amigos / asistencia psiquiatrica
+#amigos / asistencia psiquiatrica (4)
 
 datos$b21=as.factor(datos$b21)
 
 datos%>%
-  filter(!is.na(b21), !is.na(b17))%>%
+  filter(!is.na(b21), !is.na(b17), b17!="ns_nc", b17!="", b21!="ns_nc", b21!="")%>%
   ggplot()+
   geom_bar(aes(b21, fill=b17), position = "fill")+
   labs(x="Cantidad de amigos", y="Proporción", fill="Asistencia psicológica/psiquiátrica")
-
-
-  
-  
-#Padres
-  
-  datos=datos%>%
-  mutate(b33a=case_when(
-    b33a=="1" ~ "No es cierto",
-    b33a=="2"~"Un tanto cierto"))
-
-datos$b33a=as.factor(datos$b33a)
-
-datos%>%
-  filter(!is.na(b33a))%>%
-  ggplot()+
-  geom_bar(aes((`ICH[, 19]`), fill=b33a), position= "fill")+
-  labs(x="ICH en intervalos", y="Proporción", fill="Vive c/2 padres")
-
-
-#Boxplot edad de concepción/ICH
-
-datos$c4=as.numeric(as.character(datos$c4))
-
-datos%>%
-  filter(!is.na(c4), !is.na(c5), !is.na(c7), c7!="99")%>%
-  ggplot(aes(y=c4, x=reorder(`ICH[, 19]`, c4, FUN = median)))+
-  geom_boxplot()
-
-
-
-  
 
 
 
