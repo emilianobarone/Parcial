@@ -51,6 +51,8 @@ Para ello nos basamos en el INSE (Índice de Nivel Socioeconómico), que toma en
 
 Con la información proporcionada por este estudio longitudinal, no es posible contruir el INSE debido a la falta de muchas de sus variables. Por lo tanto, construimos un indicador utilizando el mismo sistema de puntaje que el INSE pero basado únicamente en las características y elementos de confort del hogar (ya que son los presentes en el estudio) al cual denominamos ICH (Indicador de Confort del Hogar).
 
+Cabe destacar que el intervalo donde el ICH está entre 0 y 10, posee únicamente 6 observaciones. Esto implica que a la hora de analizar los gráficos no sería correcto tomar en cuenta este intervalo con la misma relevancia que el resto de ellos. 
+
 
 \newpage
 
@@ -58,7 +60,7 @@ Con la información proporcionada por este estudio longitudinal, no es posible c
 
 
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.cap=""}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="El gráfico muestra en celeste la proporción de jóvenes que repitieron al menos un año educativo y en rojo los que no; según el ICH. Podemos observar que a medida que el ICH aumenta, disminuye la proporción de los individuos que repitieron"}
 
 library(tidyverse)
 library(arules)
@@ -171,7 +173,7 @@ datos%>%
 
 
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Se puede apreciar como, a mayor ICH hay una proporción más alta de jóvenes que asisten a centros educativos; alcanzando casi el 100% los que tienen un ICH entre 90 y 100."}
 
 
 datos=datos%>%
@@ -193,7 +195,7 @@ datos%>%
 
 
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="En este gráfico salta a la vista que la gran mayoría de los jóvenes entrevistados concurren a institutos públicos. Por otro lado, podemos ver que la mayor proporción de los que asisten a instituto privado se encuentra en el intervalo 90-100 del ICH."}
 
 
 datos=datos%>%
@@ -217,7 +219,7 @@ datos%>%
 
 
 
-```{r, echo= FALSE, message=FALSE, warning=FALSE}
+```{r, echo= FALSE, message=FALSE, warning=FALSE, fig.cap="En este gráfico representamos las expectativas que tienen los padres al desempeño educativo de su hijo, según el ICH. Podemos observar que en los hogares con ICH más alto, la proporción de los padres con expectativas más altas (facultad y bachillerato) aumenta.Algo que resulta curioso es que los padres pertenecientes a los hogares con ICH entre 10 y 20 descartan la posibilidad de que su hijo sea graduado universitario, mientras que las expectativas respecto a la finalización del bachillerato o UTU son altas. Este intervalo, además, es el que presenta un porcentaje mayor de expectativas puestas en que el hijo culmine el año que cursa actualmente."}
 datos=datos%>%
   mutate(b10=case_when(
     b10=="1" ~ 1,
@@ -242,7 +244,7 @@ datos%>%
 
 ##PADRES
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Este gráfico de cajas nos muestra la distribución de las edades de concepción según el ICH. Podemos notar que para los intervalos más bajos de ICH, se acumula el 50% de las observaciones en las edades menores a 20 años. En los intervalos más altos, la mediana de las edades es mayor a 20 años. Es interesante destacar que el outlier más alto se da a los 49 años de edad; y el valor más pequeño es cercano a los 14 años."}
 
 datos$c4=as.numeric(as.character(datos$c4))
 
@@ -255,7 +257,7 @@ datos%>%
 ```
 \newpage
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Este gráfico de barras representa la proporción de jóvenes que viven con ambos padres en azul y en rojo los que no. Sorpresivamente, los hogares que alcanzan ICH elevados tienen menor porcentaje de padres conviviendo juntos; mientras que los hogares más humildes parecería que tienden a tener parejas más estables."}
 
 
 datos=datos%>%
@@ -275,7 +277,7 @@ datos%>%
 
 \newpage
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Gráfico de barras que muestra las expectativas de los padres respecto al futuro de sus hijos. Se nota que la amplia mayoría de ellos aspiran a que sus hijos se dediquen a estudiar lo que les gusta. También se puede ver que la proporción verde (que los hijos tengan recursos suficientes) es bastante similar para todos los niveles de ICH"}
 
 
 datos=datos%>%
@@ -301,14 +303,14 @@ datos%>%
 
 ##SALUD
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="El gráfico muestra que para una percepción de salud excelente (5) del hijo, la mayor cantidad de observaciones es de padres pertenecientes a hogares de alto ICH (en especial el intervalo 80-90). En cambio, para una percepción muy mala (1) el ICH es medio-bajo, aunque la cantidad de observaciones no supera las 50 en ningún intervalo."}
 datos=datos%>%
   mutate(b15=case_when(
-    b10=="1" ~ 1,
-    b10=="2"~2,
-    b10=="3"~3,
-    b10=="4"~4,
-    b10=="5"~5))
+    b15=="1" ~ 1,
+    b15=="2"~2,
+    b15=="3"~3,
+    b15=="4"~4,
+    b15=="5"~5))
 
 datos$b15=as.factor(datos$b15)
 
@@ -324,7 +326,7 @@ datos%>%
 \newpage
 
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="Este gráfico contrasta las dificultades en el aprendisaje con la asistencia psicológica/psiquiátrica. Se puede apreciar que los niños que presentan dichas dificultades tienden a concurrir a un psicólogo/psiquiatra en mayor proporción que los que no la presentan."}
 datos=datos%>%
   mutate(b1=case_when(
     b1=="1" ~"No" ,
@@ -355,7 +357,7 @@ datos%>%
 \newpage
 
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="El siguiente gráfico de puntos representa los motivos por los cuales los jóvenes estuvieron hospitalizados en el último año. Se puede destacar que operación es la razón más frecuente."}
 datos=datos%>%
   mutate(b20=case_when(
     b20=="1" ~ "Enfermedad",
@@ -383,7 +385,7 @@ datos%>%
 \newpage
 
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.cap="En este gráfico de barras podemos ver que la proporción de los jóvenes que asisten, o no, al psicólogo/psiquiatra no varía respecto a la cantidad de amigos que tiene."}
 
 
 datos$b21=as.factor(datos$b21)
