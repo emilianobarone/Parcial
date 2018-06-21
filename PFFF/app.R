@@ -17,7 +17,7 @@ ui <- fluidPage(
 fluidRow(
     column(width = 4, wellPanel(
       radioButtons("Barplots", "Tipo de Barplot",
-                   c("Repitió año", "Asiste I.Educativo", "Tipo de instituto", "Convivencia con los padres", "Expectativas sobre el hijo")
+                   c("Repitió año", "Asiste I.Educativo", "Tipo de instituto", "Expectativas sobre el hijo")
       )
     )),
     column(width = 8,
@@ -27,7 +27,10 @@ fluidRow(
                       
                       )
            )
-    )
+    ),
+
+fluidRow( column(4),
+          column(8, verbatimTextOutput("texto1")))
 ),
 
 tabPanel("Padres",
@@ -45,6 +48,8 @@ tabPanel("Padres",
            ))),
 tabPanel("Salud",
          
+         fluidRow(
+         
          column(width = 4, wellPanel(
            radioButtons("Graficas", "Tipo de gráfica",
                         c("Percepción estado salud", "Dificultades aprendizaje", "Motivos hospitalización", "Cantidad de amigos")
@@ -56,7 +61,11 @@ tabPanel("Salud",
                 plotOutput("barplot2", height = 350
                            
                 )
-         )
+         )),
+         
+         fluidRow( column(4),
+                   
+                   column(8, verbatimTextOutput("texto2")))
 )
          
          
@@ -373,108 +382,6 @@ server <- function(input, output) {
       labs(x="ICH en intervalos", y="Proporción", fill="Publico/Privado")+
       ggtitle("Barplot tipo de instituto educativo")
       
-    }else if(input$Barplots == "Convivencia con los padres") {
-      datos=read.csv("Hogares3.csv", dec = ",")
-    
-    INSE=datos%>%
-      select(a1,a2,a6, a91:a910, a912, a914, a916:a917, a919)
-    
-    
-    ICH=INSE%>%
-      mutate(a1=case_when(
-        a1=="1" ~ 0,
-        a1=="2"~10),
-        a2=case_when(
-          a2=="1"~ 10,
-          a2=="2" ~8,
-          a2=="3" ~5,
-          a2=="4" ~3,
-          a2=="5" ~0
-        ),
-        a6=case_when(
-          a6=="1"~ 0,
-          a6=="2" ~2,
-          a6=="3" ~3,
-          a6=="4" ~4,
-          a6=="5" ~5,
-          a6=="6" ~5,
-          a6=="7" ~5,
-          a6=="8" ~5,
-          a6=="9" ~5
-        ),
-        a91=case_when(
-          a91=="1" ~ 7,
-          a91=="2"~0),
-        a92=case_when(
-          a92=="1" ~ 7,
-          a92=="2"~0),
-        a93=case_when(
-          a93=="1" ~ 5,
-          a93=="2"~0),
-        a94=case_when(
-          a94=="1" ~ 2,
-          a94=="2"~0),
-        a95=case_when(
-          a95=="1" ~ 7,
-          a95=="2"~0),
-        a96=case_when(
-          a96=="1" ~ 6,
-          a96=="2"~0),
-        a97=case_when(
-          a97=="1" ~ 3,
-          a97=="2"~0),
-        a98=case_when(
-          a98=="1" ~ 5,
-          a98=="2"~0),
-        a99=case_when(
-          a99=="1" ~ 2,
-          a99=="2"~0),
-        a910=case_when(
-          a910=="1" ~ 2,
-          a910=="2"~0),
-        a912=case_when(
-          a912=="1" ~ 4,
-          a912=="2"~0),
-        a914=case_when(
-          a914=="1" ~ 6,
-          a914=="2"~0),
-        a916=case_when(
-          a916=="1" ~ 6,
-          a916=="2"~0),
-        a917=case_when(
-          a917=="1" ~ 8,
-          a917=="2"~0),
-        a919=case_when(
-          a919=="1" ~ 5,
-          a919=="2"~0)
-      )
-    
-    ICH[is.na(ICH)] <- 0
-    
-    
-    ICH=ICH%>%
-      mutate(Puntaje=rowSums(ICH))
-    
-    datos=cbind(datos, ICH[,19])
-    
-    datos$`ICH[, 19]`=discretize(datos$`ICH[, 19]`, method = "interval", breaks = 10)
-    str(datos$`ICH[, 19]`)
-    
-    datos=datos%>%
-      mutate(b33a=case_when(
-        b33a=="1" ~ "No es cierto",
-        b33a=="2"~"Un tanto cierto"))
-    
-    datos$b33a=as.factor(datos$b33a)
-    
-    datos%>%
-      filter(!is.na(b33a))%>%
-      ggplot()+
-      geom_bar(aes((`ICH[, 19]`), fill=b33a), position= "fill")+
-      labs(x="ICH en intervalos", y="Proporción", fill="Vive c/2 padres")+
-      ggtitle("Barplot convivencia con los padres")
-      
-      
     }else if (input$Barplots == "Expectativas sobre el hijo"){
       datos=read.csv("Hogares3.csv", dec = ",")
       
@@ -580,6 +487,14 @@ server <- function(input, output) {
         ggtitle("Barplot expectativas de los hijos")
     }
   })
+  
+  
+  output$texto1= renderText({
+    if (input$Barplots == "Repitió año") {"El gráfico muestra en celeste la proporción de jóvenes que repitieron al menos un año educativo y en rojo los que no; según el ICH. Podemos observar que a medida que el ICH aumenta, disminuye la proporción de los individuos que repitieron"}
+    else if(input$Barplots=="Asiste I.Educativo"){"Se puede apreciar como, a mayor ICH hay una proporción más alta de jóvenes que asisten a centros educativos; alcanzando casi el 100% los que tienen un ICH entre 90 y 100."}
+    else if (input$Barplots=="Tipo de instituto"){"En este gráfico salta a la vista que la gran mayoría de los jóvenes entrevistados concurren a institutos públicos. Por otro lado, podemos ver que la mayor proporción de los que asisten a instituto privado se encuentra en el intervalo 90-100 del ICH."}
+    else if(input$Barplots=="Expectativas sobre el hijo"){"En este gráfico representamos las expectativas que tienen los padres al desempeño educativo de su hijo, según el ICH. Podemos observar que en los hogares con ICH más alto, la proporción de los padres con expectativas más altas (facultad y bachillerato) aumenta.Algo que resulta curioso es que los padres pertenecientes a los hogares con ICH entre 10 y 20 descartan la posibilidad de que su hijo sea graduado universitario, mientras que las expectativas respecto a la finalización del bachillerato o UTU son altas. Este intervalo, además, es el que presenta un porcentaje mayor de expectativas puestas en que el hijo culmine el año que cursa actualmente."}})
+    
   
   output$ploth=renderPlot({INSE=datos%>%
     select(a1,a2,a6, a91:a910, a912, a914, a916:a917, a919)
@@ -883,6 +798,13 @@ server <- function(input, output) {
       labs(x="Cantidad de amigos", y="Proporción", fill="Asistencia psicológica/psiquiátrica")}
     
   })
+  
+  output$texto2= renderText({
+    if (input$Graficas == "Percepción estado salud") {"El gráfico muestra que para una percepción de salud excelente (5) del hijo, la mayor cantidad de observaciones es de padres pertenecientes a hogares de alto ICH (en especial el intervalo 80-90). En cambio, para una percepción muy mala (1) el ICH es medio-bajo, aunque la cantidad de observaciones no supera las 50 en ningún intervalo."}
+    else if(input$Graficas=="Dificultades aprendizaje"){"Este gráfico contrasta las dificultades en el aprendisaje con la asistencia psicológica/psiquiátrica. Se puede apreciar que los niños que presentan dichas dificultades tienden a concurrir a un psicólogo/psiquiatra en mayor proporción que los que no la presentan."}
+    else if (input$Graficas=="Motivos hospitalización"){"El siguiente gráfico de puntos representa los motivos por los cuales los jóvenes estuvieron hospitalizados en el último año. Se puede destacar que operación es la razón más frecuente."}
+    else if(input$Graficas=="Cantidad de amigos"){"En este gráfico de barras podemos ver que la proporción de los jóvenes que asisten, o no, al psicólogo/psiquiatra no varía respecto a la cantidad de amigos que tiene."}})
+  
     
     
     

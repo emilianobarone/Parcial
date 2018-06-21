@@ -308,8 +308,15 @@ datos%>%
 
 
 
+#verbatime shiny
 
+"Percepción estado salud"
 
+"Dificultades aprendizaje"
+
+"Motivos hospitalización"
+
+"Cantidad de amigos"
 
 
 
