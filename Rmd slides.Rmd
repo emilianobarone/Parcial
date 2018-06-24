@@ -30,6 +30,7 @@ Nuestros objetivos son los siguientes
 
 Los datos contienen información acerca de los niños, los adultos responsables y las características de sus hogares. En nuestra exploración, sólo consideraremos la información proveniente de los hogares. La base de datos con la que trabajaremos consta de 2151 observaciones y 397 variables, de las cuales utilizaremos unicamente diez.
 
+##PREGUNTAS
 
 ###Educación
 
