@@ -93,7 +93,7 @@ library(tidyverse)
 library(arules)
 
 
-datos=read.csv("C:/Users/emili/Desktop/Emiliano/STAT_NT/Proyecto-Final/Hogares3.csv", dec = ",")
+datos=read.csv("Hogares3.csv", dec = ",")
 
 INSE=datos%>%
   select(a1,a2,a6, a91:a910, a912, a914, a916:a917, a919)
