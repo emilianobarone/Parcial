@@ -8,7 +8,7 @@ ui <- fluidPage(
                
                fluidRow(
                  
-                 column(width = 4, wellPanel(sliderInput(inputId =  "sliderh" , label = "Numero de barras" ,min = 1, max = 10, value = 4)))
+                 column(width = 4, wellPanel(sliderInput(inputId =  "sliderh" , label = "Numero de barras" ,min = 1, max = 60, value = 30)))
                  , column(width = 8, plotOutput("ploth" )))),
     
     
@@ -578,7 +578,7 @@ server <- function(input, output) {
   
   ICH%>%
     ggplot(aes(x=Puntaje))+
-    geom_histogram(fill="white", colour="black", binwidth = input$sliderh)})
+    geom_histogram(fill="white", colour="black", bins =  input$sliderh)})
   
   
 
@@ -834,8 +834,10 @@ output$plot1 <- renderPlotly({
       
       f=datos%>%
         filter(!is.na(b15))%>%
-        ggplot()+
-        geom_count(aes(`ICH[, 19]`, b15))+
+        group_by(`ICH[, 19]`, b15)%>%
+        summarise(count=n())%>%
+        ggplot(aes(`ICH[, 19]`, b15 ))+
+        geom_tile(aes(fill=count))+
         labs(x="ICH en intervalos", y="Percepción estado de salud", size="Cantidad de obs")
       
       ggplotly(f)  
@@ -907,7 +909,7 @@ output$plot1 <- renderPlotly({
   
   
   output$texto2= renderText({
-    if (input$Graficas == "Percepción estado salud") {"El gráfico muestra que para una percepción de salud excelente (5) del hijo, la mayor cantidad de observaciones es de padres pertenecientes a hogares de alto ICH (en especial el intervalo 80-90). En cambio, para una percepción muy mala (1) el ICH es medio-bajo, aunque la cantidad de observaciones no supera las 50 en ningún intervalo."}
+    if (input$Graficas == "Percepción estado salud") {"El gráfico muestra que para una percepción de salud excelente (5) del hijo, la mayor cantidad de observaciones es de padres pertenecientes a hogares de alto ICH (en especial el intervalo 80-90). Tambien podemos ver que el nivel de salud percibido que mas observaciones tiene es el 4 (buena)."}
     else if(input$Graficas=="Dificultades aprendizaje"){"Este gráfico contrasta las dificultades en el aprendisaje con la asistencia psicológica/psiquiátrica. Se puede apreciar que los niños que presentan dichas dificultades tienden a concurrir a un psicólogo/psiquiatra en mayor proporción que los que no la presentan."}
     else if (input$Graficas=="Motivos hospitalización"){"El siguiente gráfico de puntos representa los motivos por los cuales los jóvenes estuvieron hospitalizados en el último año. Se puede destacar que operación es la razón más frecuente."}
     
@@ -926,6 +928,7 @@ output$plot1 <- renderPlotly({
     
   
 }
+
 
 
 shinyApp(ui, server)
