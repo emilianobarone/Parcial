@@ -10,12 +10,12 @@ author: María Noel Blanco, Emiliano Barone.
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-##INTRODUCCIÓN
+## INTRODUCCIÓN
 
 Nuestro trabajo se basa en el análisis de los datos del Estudio Longitudinal de Bienestar del Uruguay llevado a cabo por el Instituto de Economía de la FCEA. El trabajo tuvo inicio en el año 2004 y continua hasta el día de hoy, nosotros nos vamos a focalizar en la tercera ola (cuando los que eran niños en 2004 pasaron a tener alrededor de 14 años).
 
 
-##OBJETIVOS
+## OBJETIVOS
 
 Nuestros objetivos son los siguientes
 
@@ -26,13 +26,13 @@ Nuestros objetivos son los siguientes
 5. Creación de una herramienta que permite una visualización interactiva (Shiny App).
 
 
-##DATOS
+## DATOS
 
 Los datos contienen información acerca de los niños, los adultos responsables y las características de sus hogares. En nuestra exploración, sólo consideraremos la información proveniente de los hogares. La base de datos con la que trabajaremos consta de 2151 observaciones y 397 variables, de las cuales utilizaremos unicamente diez.
 
-##PREGUNTAS
+## PREGUNTAS
 
-###Educación
+### Educación
 
 1. ¿Cuál es la proporción de los jóvenes que han repetido algún año escolar o liceal teniendo en cuenta el intervalo de ICH al que pertenecen sus hogares?
 
@@ -42,9 +42,9 @@ Los datos contienen información acerca de los niños, los adultos responsables 
 
 4. ¿Cuáles son las expectativas de los padres respecto al futuro educativo de sus hijos en relación al intervalo de ICH al que pertenecen sus hogares?
 
-##PREGUNTAS
+## PREGUNTAS
 
-###Padres
+### Padres
 
 1. Relación entre el ICH de los hogares y la edad en la que la madre concibió al hijo o hija.
 
@@ -53,9 +53,9 @@ Los datos contienen información acerca de los niños, los adultos responsables 
 3. ¿Cuáles son las expectativas de los padres respecto al futuro de sus hijos en relación al intervalo de ICH al que pertenecen sus hogares?
 
 
-##PREGUNTAS
+## PREGUNTAS
 
-###Salud
+### Salud
 
 1. ¿Cómo perciben los padres el estado de salud de su hijo según el intervalo de ICH de cada uno de sus hogares?
 
@@ -64,20 +64,20 @@ Los datos contienen información acerca de los niños, los adultos responsables 
 3. De los jóvenes que fueron hospitalizados en el último año (2011), ¿cuáles fueron los motivos de dicha hospitalización?
 
 
-##ANÁLISIS EXPLORATORIO
+## ANÁLISIS EXPLORATORIO
 
 Para llevar a cabo el análisis de los datos decidimos crear un indicador que toma en cuenta las principales características de los hogares y sus comodidades, con el fin de encontrar un sustituto de lo que sería la variable ingreso que perciben estos hogares. 
 
 Para ello nos basamos en el INSE (Índice de Nivel Socioeconómico), que toma en cuenta variables relacionadas con la composición del hogar, la educación y atención en salud, elementos del confort del hogar y características de la vivienda. Con esta información se elabora un sistema de puntaje en el que se asigna a cada variable un puntaje mínimo y máximo. Dependiendo de la respuesta proporcionada por el entrevistado, se obtiene una determinada cantidad de puntos por cada variable. La suma de ellos es el puntaje final.
 
-##ANÁLISIS EXPLORATORIO
+## ANÁLISIS EXPLORATORIO
 
 Con la información proporcionada por este estudio longitudinal, no es posible contruir el INSE debido a la falta de muchas de sus variables. Por lo tanto, construimos un indicador utilizando el mismo sistema de puntaje que el INSE pero basado únicamente en las características y elementos de confort del hogar (ya que son los presentes en el estudio) al cual denominamos ICH (Indicador de Confort del Hogar).
 
 Las variables que utilizamos para su creación son: vive en asentamiento, material de construcción de las paredes de la casa, si dispone de electrodomésticos tales como calefón, cocina eléctrica, microondas, equipo de música, heladera, lavarropas, lavavajillas,estufa, plancha, aspiradora, TV cable y computadora; si hay conexión a internet, automóvil y teléfono celular en el hogar.
 A cada una de ellas le asignamos un puntaje (ver Tablas) y para cada hogar sumamos los puntos obtenidos por cada una de estas variables. Un hogar con ICH perfecto suma un total de 100 puntos.
 
-##ANÁLISIS EXPLORATORIO
+## ANÁLISIS EXPLORATORIO
 
 Cabe destacar que el intervalo donde el ICH está entre 0 y 10, posee únicamente 6 observaciones. Esto implica que a la hora de analizar los gráficos no sería correcto tomar en cuenta este intervalo con la misma relevancia que el resto de los mismos.
 
@@ -85,7 +85,7 @@ A continuación les presentaremos los principales resultados de nuestro análisi
 
 
 
-##Educación
+## Educación
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.height=4, fig.width=8}
 
@@ -197,7 +197,7 @@ datos%>%
 En la Figura 1 podemos observar claramente que a medida que el ICH aumenta, disminuye la proporción de los individuos que repitieron al menos un año educativo.
 
 
-##Educación
+## Educación
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.height=4, fig.width=8}
 
@@ -220,7 +220,7 @@ datos%>%
 En esta visualización (Figura 2) se puede apreciar como, a mayor ICH hay una proporción más alta de jóvenes que asisten a centros educativos; alcanzando casi el 100% los que tienen un ICH entre 90 y 100.
 
 
-##Educación
+## Educación
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.height=4, fig.width=8}
 
@@ -244,7 +244,7 @@ datos%>%
 En la Figura 3 salta a la vista que la gran mayoría de los jóvenes entrevistados concurren a institutos públicos. Por otro lado, podemos ver que la mayor proporción de los que asisten a instituto privado se encuentra en el intervalo 90-100 del ICH.
 
 
-##Educación
+## Educación
 
 ```{r, echo= FALSE, message=FALSE, warning=FALSE, fig.height=3 , fig.width=7}
 datos=datos%>%
@@ -268,7 +268,7 @@ datos%>%
 
 En la Figura 4 representamos las expectativas que tienen los padres al desempeño educativo de su hijo, según el ICH. Podemos observar que en los hogares con ICH más alto, la proporción de los padres con expectativas más altas (facultad y bachillerato) aumenta. Un dato curioso es que en los hogares con ICH entre 10 y 20 los padres descartan la posibilidad de que su hijo sea graduado universitario y, además, presentan un porcentaje mayor de expectativas puestas en que el hijo no culmine el año que cursa actualmente.
 
-##Padres
+## Padres
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.height=4, fig.width=8}
 
@@ -284,7 +284,7 @@ datos%>%
 
 En la Figura 5 podemos notar que para los intervalos más bajos de ICH, se acumula el 50% de las observaciones en las edades menores a 20 años. En los intervalos más altos, la mediana de las edades es mayor a 20 años. Es interesante destacar que el outlier más alto se da a los 49 años de edad; y el valor más pequeño es cercano a los 14 años.
 
-##Padres
+## Padres
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.height=4, fig.width=8}
 
@@ -306,7 +306,7 @@ datos%>%
 
 La Figura 6 muestra que, los hogares que alcanzan ICH elevados tienen menor porcentaje de padres conviviendo juntos; mientras que los hogares más humildes parecería que tienden a tener parejas más estables.
 
-##Padres
+## Padres
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.height=4, fig.width=8}
 
@@ -331,7 +331,7 @@ datos%>%
 
 La Figura 7 denota que la amplia mayoría de los padres aspiran a que sus hijos se dediquen a estudiar lo que les gusta. También se puede ver que la proporción verde (que los hijos tengan recursos suficientes) es bastante similar para todos los niveles de ICH.
 
-##Estado de salud
+## Estado de salud
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 datos=datos%>%
@@ -355,7 +355,7 @@ datos%>%
 
 El gráfico de la figura 8 muestra que para una percepción de salud excelente (5) del hijo, la mayor cantidad de observaciones es de padres pertenecientes a hogares de alto ICH (en especial el intervalo 80-90). Tambien podemos ver que el nivel de salud percibido que mas observaciones tiene es el 4 (buena).
 
-##Estado de salud
+## Estado de salud
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.height=4, fig.width=8}
 datos=datos%>%
@@ -385,7 +385,8 @@ datos%>%
 
 En la Figura 9 se puede apreciar que, a medida que los adolescentes presentan dificultades en el aprendizaje, tienden a concurrir a un psicólogo/psiquiatra en mayor proporción que los que no las presentan.
 
-##Estado de salud
+## Estado de salud
+
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.height=4, fig.width=8}
 datos=datos%>%
   mutate(b20=case_when(
@@ -415,7 +416,7 @@ datos%>%
 De la Figura 10 se puede destacar que la operación es la razón más frecuente por la que los jóvenes permanecen hospitalizados.
 
 
-##BIBLIOGRAFÍA
+## BIBLIOGRAFÍA
 
 * Hadley Wickham (2017). tidyverse: Easily Install and Load the
   'Tidyverse'. R package version 1.2.1.
@@ -433,7 +434,7 @@ De la Figura 10 se puede destacar que la operación es la razón más frecuente 
   https://CRAN.R-project.org/package=plotly
 
 
-##BIBLIOGRAFÍA
+## BIBLIOGRAFÍA
 
 
 * Winston Chang, Joe Cheng, JJ Allaire, Yihui Xie and Jonathan McPherson
