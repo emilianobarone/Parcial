@@ -415,6 +415,18 @@ datos%>%
 
 De la Figura 10 se puede destacar que la operación es la razón más frecuente por la que los jóvenes permanecen hospitalizados.
 
+## COMENTARIOS FINALES
+ Para concluir nuetro trabajo nos gustaría resumir los principales hallazgos que hemos encontrado. Primero que nada decir que respecto a la educación en Uruguay, el porcentaje de asistencia es alto (a la edad de 14 años), particularmente a institutos privados. La repetición de año es bastante alta. A su vez es clara la relación que se da entre eduación e ICH: a mayor ICH más probabilidad de concurrir a un centro educativo y de no haber repetido año.
+Con respecto al estado de salud, lo que podemos decir es que existe una relación inversa entre dificultad de aprendizaje y tratamiento psicológico/psiquiátrico. También vimos que de los jóvenes que fueron hospitalizados, la amplia mayoría se debieron a operaciones, estudios médicos o enfermedades y el resto a accidentes, quemaduras u otros motivos.
+Sobre las expectativas que tienen los padres sobre sus hijos, que rondan los 14 años, podemos decir que mantienen una relación con el puntaje del ICH. A mayor ICH, los padres parecen esperar más en cuanto al nivel de educación de sus hijos.
+
+## COMENTARIOS FINALES
+
+Respecto a la edad de concepción también es posible ver que se mantiene, en general,  la misma relación con el ICH. Para los ICH más bajos, la mediana de la edad baja de los 20 años.
+Como nuestra investigación abarca distintos aspectos de la vida de un individuo (hogar, salud, educación, familia) y se basa en una base de datos bastante extensa, creemos que puede incentivar futuras investigaciones o extensiones, ya sea siguiendo el hilo de este trabajo o focalizándose en algo particular de interés para el investigador. A su vez,  nuestro Indicador de Confort del Hogar puede llegar a ser utilizado por otras personas si lo creen pertinente.
+
+
+
 
 ## BIBLIOGRAFÍA
 
@@ -433,16 +445,6 @@ De la Figura 10 se puede destacar que la operación es la razón más frecuente 
   Interactive Web Graphics via 'plotly.js'. R package version 4.7.1.
   https://CRAN.R-project.org/package=plotly
 
-
-## COMENTARIOS FINALES
- Para concluir nuetro trabajo nos gustaría resumir los principales hallazgos que hemos encontrado. Primero que nada decir que respecto a la educación en Uruguay, el porcentaje de asistencia es alto (a la edad de 14 años), particularmente a institutos privados. La repetición de año es bastante alta. A su vez es clara la relación que se da entre eduación e ICH: a mayor ICH más probabilidad de concurrir a un centro educativo y de no haber repetido año.
-Con respecto al estado de salud, lo que podemos decir es que existe una relación inversa entre dificultad de aprendizaje y tratamiento psicológico/psiquiátrico. También vimos que de los jóvenes que fueron hospitalizados, la amplia mayoría se debieron a operaciones, estudios médicos o enfermedades y el resto a accidentes, quemaduras u otros motivos.
-Sobre las expectativas que tienen los padres sobre sus hijos, que rondan los 14 años, podemos decir que mantienen una relación con el puntaje del ICH. A mayor ICH, los padres parecen esperar más en cuanto al nivel de educación de sus hijos.
-
-## COMENTARIOS FINALES
-
-Respecto a la edad de concepción también es posible ver que se mantiene, en general,  la misma relación con el ICH. Para los ICH más bajos, la mediana de la edad baja de los 20 años.
-Como nuestra investigación abarca distintos aspectos de la vida de un individuo (hogar, salud, educación, familia) y se basa en una base de datos bastante extensa, creemos que puede incentivar futuras investigaciones o extensiones, ya sea siguiendo el hilo de este trabajo o focalizándose en algo particular de interés para el investigador. A su vez,  nuestro Indicador de Confort del Hogar puede llegar a ser utilizado por otras personas si lo creen pertinente.
 
 
 ## BIBLIOGRAFÍA
